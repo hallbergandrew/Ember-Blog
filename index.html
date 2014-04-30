@@ -26,6 +26,31 @@
 
   </script>
 
+  <script type="text/x-handlebars" id="posts">
+    {{#each}}
+      <div>
+        {{#link-to 'post' this}}
+          {{title}} by {{author.name}}
+        {{/link-to}}
+      </div>
+    {{/each}}
+
+      {{outlet}}
+
+  </script>
+
+  <script type="text/x-handlebars" id="post">
+      <h1>{{title}}</h1>
+      <h2> by {{author.name}} <small> ({{date}}) </small><h2>
+      <hr>
+      <div>
+        {{excerpt}}
+      <div>
+      <div>
+        {{body}}
+      <div>
+  </script>
+
   <script type="text/x-handlebars" id="about">
   <div class='about'>
       <p>Yehuda Katz is a member of the <a href="http://emberjs.com">Ember.js</a>, <a href="http://rubyonrails.org">Ruby on Rails</a>
