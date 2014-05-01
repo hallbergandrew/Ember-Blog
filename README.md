@@ -5,9 +5,8 @@
 To Do
 =======
 
-* Read and write posts
-* Add and view photos
-* Receive messages in contacts
+* Read and edit posts
+* Read and edit contacts
 
 
-** Decide on backend
++ Convert to rails
