@@ -7,7 +7,9 @@ Blog.Router.map(function() {
     this.resource('post', { path: ':post_id'});
   });
   // this.resource('post', { path: ':post_id'}); Works for new page of just post.
-  this.resource('contact');
+  this.resource('contacts', function() {
+    this.resource('contact', { path: ':contact_id'});
+  });
   this.resource('photos');
 });
 //Translates model into object for template
@@ -23,8 +25,35 @@ Blog.PostRoute = Ember.Route.extend({
   }
 });
 
+Blog.ContactsRoute = Ember.Route.extend({
+  model: function() {
+    return contacts;
+  }
+});
+
+Blog.ContactRoute = Ember.Route.extend({
+  model: function(params) {
+    return contacts.findBy('id', params.post_id);
+  }
+});
+
+
 //Controlls action state and responds to events from template Controller
 Blog.PostController = Ember.ObjectController.extend({
+  isEditing: false,
+
+  actions: {
+      edit: function() {
+        this.set('isEditing', true);
+      },
+
+      doneEditing: function() {
+        this.set('isEditing', false);
+      }
+  }
+});
+
+Blog.ContactController = Ember.ObjectController.extend({
   isEditing: false,
 
   actions: {
@@ -73,4 +102,20 @@ var posts = [{
   date: new Date('12-24-2012'),
   excerpt: "My [appearance on the Ruby Rogues podcast](http://rubyrogues.com/056-rr-david-heinemeier-hansson/) recently came up for discussion again on the private Parley mailing list.",
   body: "A long list of topics were raised and I took a time to ramble at large about all of them at once. Apologies for not taking the time to be more succinct, but at least each topic has a header so you can skip stuff you don't care about.\n\n### Maintainability\n\nIt's simply not true to say that I don't care about maintainability. I still work on the oldest Rails app in the world."
+}];
+
+var contacts = [{
+  id: '1',
+  name: { first: "Andrew", last: "Hallberg" },
+  position: "Web Developer"
+},
+{
+  id: '2',
+  name: { first: "Nunna", last: "Nuns"},
+  position: "He the Nunna"
+},
+{
+  id: '3',
+  name: { first: "Lion", last: "Girl"},
+  position: "She is the CEO"
 }];

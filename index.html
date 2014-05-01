@@ -14,7 +14,7 @@
         <a class="brand" href="#">EmberBlog</a>
         <ul class="nav">
           <li>{{#link-to 'posts'}}Posts{{/link-to}}</li>
-          <li>{{#link-to 'contact'}}Contact{{/link-to}}</li>
+          <li>{{#link-to 'contacts'}}Contact{{/link-to}}</li>
           <li>{{#link-to 'photos'}}Photos{{/link-to}}</li>
           <li>{{#link-to 'about'}}About{{/link-to}}</li>
 
@@ -24,6 +24,31 @@
 
     {{outlet}}
 
+  </script>
+
+  <script type="text/x-handlebars" id="contacts">
+  {{#each}}
+    <div>
+      {{#link-to 'contact' this}}
+      {{name.last}}, {{name.first}}
+      {{/link-to}}
+    </div>
+    {{/each}}
+
+    {{outlet}}
+
+  </script>
+
+  <script type="text/x-handlebars" id="contact">
+      {{#if isEditing}}
+        {{partial 'contact/edit'}}
+        <button class="btn" {{action 'doneEditing'}}>Done</button>
+      {{else}}
+        <button class="btn" {{action 'edit'}}>Edit</button>
+      {{/if}}
+
+    <h1>{{name.first}} {{name.last}}</h1>
+    <h2>{{position}}</h2>
   </script>
 
   <script type="text/x-handlebars" id="posts">
@@ -42,9 +67,9 @@
   <script type="text/x-handlebars" id="post">
       {{#if isEditing}}
         {{partial 'post/edit'}}
-        <button {{action 'doneEditing'}}>Done</button>
+        <button class="btn" {{action 'doneEditing'}}>Done</button>
       {{else}}
-        <button {{action 'edit'}}>Edit</button>
+        <button class="btn" {{action 'edit'}}>Edit</button>
       {{/if}}
       <h1>{{title}}</h1>
       <h2> by {{author.name}} <small> ({{format-date date}}) </small></h2>
@@ -55,6 +80,12 @@
       <div>
         {{format-markdown body}}
       <div>
+  </script>
+
+  <script type="text/x-handlebars" id="contact/_edit">
+      <p>{{input type="text" value=name.first}}</p>
+      <p>{{input type="text" value=name.last}}</p>
+      <p>{{input type="text" value=position}}</p>
   </script>
 
   <script type="text/x-handlebars" id="post/_edit">
